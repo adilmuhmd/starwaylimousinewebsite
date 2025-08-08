@@ -28,21 +28,6 @@ We offer a full spectrum of luxury transport solutions, meticulously tailored to
 
 ---
 
-##  Our Premium Fleet
-
-Choose from a range of luxury vehicles, each maintained to the highest standards of safety and comfort:  
-- **Lexus ES 300H**  
-- **Mitsubishi Outlander**  
-- **Toyota Highlander** :contentReference[oaicite:2]{index=2}
-
----
-
-##  Trusted By
-
-We take pride in being a preferred transportation partner for industry leaders, including **Uber** and **Careem**. :contentReference[oaicite:3]{index=3}
-
----
-
 ##  Contact Us
 
 - **Address:** Suhail Al Mazroui Building, Sheikh Zayed Bin Sultan St, Abu Dhabi  
