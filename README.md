@@ -39,7 +39,7 @@ We offer a full spectrum of luxury transport solutions, meticulously tailored to
 ##  Book Now
 
 Ready to elevate your journey?  
-**[Book Now via WhatsApp](http://wa.me/)** or call us at ***+971 56 300 6129***. :contentReference[oaicite:5]{index=5}
+**[Book Now via WhatsApp](http://wa.me/)** or call us at ***+971 56 300 6129***.
 
 ---
 
@@ -49,4 +49,4 @@ This repository and its content are for internal/business use. For any inquiries
 
 ---
 
-*(© 2025 Starway Limousine — All rights reserved.)* :contentReference[oaicite:6]{index=6}
+*(© 2025 Starway Limousine — All rights reserved.)*
