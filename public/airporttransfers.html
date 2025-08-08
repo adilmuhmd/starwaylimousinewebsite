@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Airport Transfer - Starway Limousine</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <style>
+    @font-face {
+      font-family: "Casanova";
+      src: url("fonts/Casanova.otf") format("opentype");
+      font-weight: normal;
+      font-style: normal;
+    }
+    .font-casanova {
+      font-family: "Casanova", serif;
+    }
+    .car-card:hover .book-now-btn {
+      opacity: 1;
+    }
+    .book-now-btn {
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    @media (max-width: 600px) {
+      .book-now-btn {
+        opacity: 1;
+      }
+    }
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background-color: transparent;
+      z-index: 50;
+    }
+    .nav-link {
+      transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+    .nav-link:hover {
+      transform: scale(1.3);
+      color: #facc15;
+    }
+    .hero-section {
+      max-height: 450px; /* This caps the height to a fixed value. Adjust as needed. */
+    }
+    .service-card {
+        transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+    }
+    .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Add this to your existing <style> tag in the <head> */
+
+      .step-card {
+
+        position: relative; /* Needed for positioning the step number and connector line */
+
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        border: 1px solid #e5e7eb; /* A subtle border */
+
+      }
+
+      .step-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: #facc15; /* yellow-400 */
+}
+.step-number {
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  font-size: 5rem;
+  font-weight: 800;
+  color: #f9fafb; /* gray-50 */
+  z-index: 0;
+  line-height: 1;
+}
+
+/* The connector line - will only show on large screens */
+@media (min-width: 1024px) {
+  .step-card:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 30%;
+    right: -2.75rem; /* Positions it between cards (gap-8 is 2rem, plus some more) */
+    width: 2rem;
+    height: 2px;
+    background-image: linear-gradient(to right, #d1d5db 50%, transparent 50%);
+    background-size: 8px 2px;
+    z-index: -1;
+  }
+}
+.fab-container .fab-option {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  transform: translateY(10px) scale(0.5);
+  transition: all 0.3s ease-in-out;
+  /* Prevent clicking the hidden buttons */
+  pointer-events: none;
+}
+
+/* CHANGE IS HERE: Use .is-open instead of :hover */
+.fab-container.is-open .fab-option {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Position each button when open */
+.fab-container.is-open .fab-option.whatsapp {
+  transform: translateY(-85px) scale(1);
+}
+.fab-container.is-open .fab-option.call {
+  transform: translateY(-150px) scale(1);
+}
+
+.main-fab-icon {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Rotate icon when open */
+.fab-container.is-open .main-fab-icon {
+  transform: rotate(45deg);
+}
+
+  </style>
+</head>
+<body class="bg-gray-50 text-black">
+  <header class="py-6 px-8 sm:px-12 md:px-16">
+    <div class="container mx-auto flex justify-between items-center">
+      <a href="index.html">
+        <img src="assets/starwaylogowhite.png" alt="Starway Limousine Logo" class="h-20" />
+      </a>
+      <div class="flex-1"></div>
+      <nav class="hidden md:flex space-x-6">
+        <a href="index.html" class="text-white text-lg nav-link">Home</a>
+        <a href="private-tours.html" class="text-white text-lg nav-link">Private Tours</a>
+        <a href="airport-transfer.html" class="text-white text-lg nav-link">Airport Transfer</a>
+        <a href="event-transfers.html" class="text-white text-lg nav-link">Event Transfers</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <main class="pb-16">
+  
+    <section class="relative w-full h-[45vh] overflow-hidden hero-section">
+      <img
+        src="assets/airport.png"
+        alt="Airport Transfer"
+        class="w-full h-full object-cover object-center hero-image-zoom"
+      />
+      <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    </section>
+
+    <div class="relative z-10 -mt-20">
+      <div class="container mx-auto max-w-4xl">
+        <div class="bg-white rounded-lg shadow-2xl p-8 md:p-12 hero-content-box">
+          <h1 class="text-5xl font-casanova font-bold text-yellow-500">Airport Transfer</h1>
+          <p class="mt-4 text-lg text-gray-700">
+            Starway Limousine offers top-tier airport transfer services in Dubai, Abu Dhabi, and across the UAE. Our reliable and luxurious transportation ensures a seamless journey to and from the airport, tailored for business travelers, families, or anyone seeking comfort and punctuality.
+          </p>
+          <a
+            href="https://wa.me/971563006129?text=Hi, I would like to book an Airport Transfer."
+            target="_blank"
+            class="mt-6 inline-block text-yellow-500 font-bold text-lg hover:text-yellow-400 transition-colors"
+          >
+            Book Now
+            <div class="h-0.5 w-16 bg-yellow-500 mt-1"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- How it works -->
+
+   <div class="bg-gray-50 px-8 sm:px-12 md:px-16 lg:px-24 py-16 md:py-40 animate-on-scroll">
+  <div class="text-center">
+    <h3 class="text-4xl font-casanova text-yellow-500">Your Seamless Airport Transfer</h3>
+    <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">From booking to drop-off, experience a flawless journey with our premier airport transfer service.</p>
+  </div>
+  
+  <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 relative z-0">
+
+    <div class="step-card bg-white p-6 rounded-lg shadow-lg text-left overflow-hidden">
+      <span class="step-number">01</span>
+      <div class="relative z-10">
+        <div class="mb-4 inline-block  p-2 rounded-full">
+          <img src="icons/booking.png" alt="Book Icon" class="w-8 h-8" />
+        </div>
+        <h4 class="text-xl font-semibold text-gray-900">Easy Online Booking</h4>
+        <p class="mt-2 text-gray-600">Book your transfer in minutes via our website or WhatsApp. Provide flight details and get instant confirmation.</p>
+      </div>
+    </div>
+
+    <div class="step-card bg-white p-6 rounded-lg shadow-lg text-left overflow-hidden">
+      <span class="step-number">02</span>
+      <div class="relative z-10">
+        <div class="mb-4 inline-block  p-2 rounded-full">
+          <img src="icons/flights.png" alt="Flight Tracking Icon" class="w-8 h-8" />
+        </div>
+        <h4 class="text-xl font-semibold text-gray-900">We Track Your Flight</h4>
+        <p class="mt-2 text-gray-600">Forget delays. We monitor your flight's status in real-time and dispatch your chauffeur for a punctual pickup.</p>
+      </div>
+    </div>
+
+    <div class="step-card bg-white p-6 rounded-lg shadow-lg text-left overflow-hidden">
+      <span class="step-number">03</span>
+      <div class="relative z-10">
+        <div class="mb-4 inline-block  p-2 rounded-full">
+          <img src="icons/professionalmeet.png" alt="Chauffeur Icon" class="w-8 h-8" />
+        </div>
+        <h4 class="text-xl font-semibold text-gray-900">Professional Meet & Greet</h4>
+        <p class="mt-2 text-gray-600">Your chauffeur awaits at the arrivals area with a name board for easy identification. Luggage assistance is included.</p>
+      </div>
+    </div>
+
+    <div class="step-card bg-white p-6 rounded-lg shadow-lg text-left overflow-hidden">
+      <span class="step-number">04</span>
+      <div class="relative z-10">
+        <div class="mb-4 inline-block  p-2 rounded-full">
+          <img src="icons/safejourney.png" alt="Vehicle Icon" class="w-8 h-8" />
+        </div>
+        <h4 class="text-xl font-semibold text-gray-900">Safe & Stylish Journey</h4>
+        <p class="mt-2 text-gray-600">Relax in our pristine, luxury vehicles. Enjoy a smooth and safe ride to your hotel, home, or office anywhere in the UAE.</p>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+
+      <!-- why choose starwaylimousine -->
+
+    <div class="px-8 sm:px-12 md:px-16 lg:px-24 py-16 md:py-24">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    
+    <div class="animate-on-scroll">
+      <img 
+        src="assets/airportservice.png" 
+        alt="Luxurious interior of a limousine with a view of the city"
+        class="rounded-xl shadow-2xl w-full h-full object-cover"
+      >
+    </div>
+
+    <div class="animate-on-scroll">
+      <h3 class="text-4xl font-casanova text-yellow-500">Why Choose an Airport Limo Service?</h3>
+      <p class="mt-4 text-lg text-gray-600">
+        Choosing an airport limo service is not just about luxury; it’s about a tension-free, reliable, and expert experience that nothing can compare. Here’s why it matters:
+      </p>
+
+      <ul class="mt-8 space-y-6">
+        
+        <li class="flex items-start">
+          <div class="flex-shrink-0">
+            <span class="flex items-center justify-center h-8 w-8 rounded-full bg-yellow-400 text-gray-900">
+              <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </span>
+          </div>
+          <div class="ml-4">
+            <h4 class="text-lg font-semibold text-gray-900">Comfort After a Long Flight</h4>
+            <p class="mt-1 text-gray-600">Stretch out and relax in a spacious, climate-controlled limo—perfect after hours in the air.</p>
+          </div>
+        </li>
+
+        <li class="flex items-start">
+          <div class="flex-shrink-0">
+            <span class="flex items-center justify-center h-8 w-8 rounded-full bg-yellow-400 text-gray-900">
+              <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </span>
+          </div>
+          <div class="ml-4">
+            <h4 class="text-lg font-semibold text-gray-900">Punctuality Guaranteed</h4>
+            <p class="mt-1 text-gray-600">Our chauffeurs track your flight to ensure timely pickup, even with delays, so you never have to wait.</p>
+          </div>
+        </li>
+
+        <li class="flex items-start">
+          <div class="flex-shrink-0">
+            <span class="flex items-center justify-center h-8 w-8 rounded-full bg-yellow-400 text-gray-900">
+              <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </span>
+          </div>
+          <div class="ml-4">
+            <h4 class="text-lg font-semibold text-gray-900">First-Class Impressions</h4>
+            <p class="mt-1 text-gray-600">Whether hosting a VIP client or arriving at a meeting, a limousine makes a stylish, professional statement.</p>
+          </div>
+        </li>
+        
+        <li class="flex items-start">
+          <div class="flex-shrink-0">
+            <span class="flex items-center justify-center h-8 w-8 rounded-full bg-yellow-400 text-gray-900">
+              <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </span>
+          </div>
+          <div class="ml-4">
+            <h4 class="text-lg font-semibold text-gray-900">Discreet & Private</h4>
+            <p class="mt-1 text-gray-600">Perfect for celebrities, executives, or anyone who values confidentiality and personal space.</p>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>
+    
+
+
+    <!-- Services -->
+
+    <div class="px-8 sm:px-12 md:px-16 lg:px-24 py-16 md:py-24 animate-on-scroll">
+      <h3 class="text-4xl font-casanova text-yellow-500 text-center">Our Fleet of Services</h3>
+      <p class="text-center text-lg text-gray-600 mt-4 max-w-3xl mx-auto">From corporate travel to special events, we provide a premier, tailored transportation experience for every occasion.</p>
+      
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <a href="chauffeurservice.html" class="service-card bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
+          <div class="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-full p-3">
+            <img src="icons/chauffeur.png" alt="Chauffeur Hire" class="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold text-yellow-500">Chauffeur Service</h4>
+            <p class="text-sm text-gray-600 mt-1">Experience luxury with our professional chauffeurs for any occasion.</p>
+          </div>
+        </a>
+        
+        <a href="businesstraveltrip.html" class="service-card bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
+          <div class="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-full p-3">
+            <img src="icons/businesstravel.png" alt="Business Travel" class="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold text-yellow-500">Business Travel</h4>
+            <p class="text-sm text-gray-600 mt-1">Reliable and punctual transportation for all your corporate needs.</p>
+          </div>
+        </a>
+
+        <a href="corpratetransport.html" class="service-card bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
+          <div class="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-full p-3">
+            <img src="icons/corporatetransport.png" alt="Corporate Transport" class="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold text-yellow-500">Corporate Transport</h4>
+            <p class="text-sm text-gray-600 mt-1">Custom solutions for company events, meetings, and delegations.</p>
+          </div>
+        </a>
+
+        <a href="hoteltransport.html" class="service-card bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
+          <div class="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-full p-3">
+            <img src="icons/hoteltransport.png" alt="Hotel Transport" class="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold text-yellow-500">Hotel Transport</h4>
+            <p class="text-sm text-gray-600 mt-1">Seamless transfers to and from hotels across the UAE.</p>
+          </div>
+        </a>
+
+        <a href="airporttransfers.html" class="service-card bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
+          <div class="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-full p-3">
+            <img src="icons/flights.png" alt="Airport Transfers" class="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold text-yellow-500">Airport Transfer</h4>
+            <p class="text-sm text-gray-600 mt-1">Timely and comfortable airport pickups and drop-offs, 24/7.</p>
+          </div>
+        </a>
+
+        <a href="roundtripalloveruae.html" class="service-card bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
+          <div class="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-full p-3">
+            <img src="icons/tourism.png" alt="Round Trips" class="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold text-yellow-500">UAE Round Trips</h4>
+            <p class="text-sm text-gray-600 mt-1">Explore the Emirates with our flexible city-to-city tour services.</p>
+          </div>
+        </a>
+
+        <a href="holidayparty.html" class="service-card bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
+          <div class="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-full p-3">
+            <img src="icons/holidayparties.png" alt="Holiday Parties" class="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold text-yellow-500">Holiday Parties</h4>
+            <p class="text-sm text-gray-600 mt-1">Arrive in style at your festive gatherings and celebrations.</p>
+          </div>
+        </a>
+
+        <a href="sportingevents.html" class="service-card bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
+          <div class="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-full p-3">
+            <img src="icons/sportingevents.png" alt="Sporting Events" class="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold text-yellow-500">Sporting Events</h4>
+            <p class="text-sm text-gray-600 mt-1">Travel to and from the game with ease and comfort.</p>
+          </div>
+        </a>
+
+        <a href="vipescorts.html" class="service-card bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
+          <div class="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-full p-3">
+            <img src="icons/vipescorts.png" alt="VIP Escorts" class="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold text-yellow-500">VIP Escorts</h4>
+            <p class="text-sm text-gray-600 mt-1">Discreet and secure transportation for high-profile clients.</p>
+          </div>
+        </a>
+
+      </div>
+    </div>
+    </main>
+
+
+    
+
+    <!-- Footer  -->
+
+
+  <footer id="contact" class="bg-black text-white">
+    <div class="container mx-auto py-16 px-8 sm:px-12 md:px-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <div><img src="assets/starwaylogowhite.png" alt="Starway Logo" class="h-20 mb-4" /><p class="text-gray-400">Your premier choice for luxury transport in the UAE, dedicated to providing unparalleled service, comfort, and reliability.</p></div>
+            <div><h4 class="text-lg font-semibold text-yellow-500 mb-4">Quick Links</h4><ul class="space-y-2"><li><a href="#" class="text-gray-400 hover:text-yellow-400 transition">Home</a></li><li><a href="#about" class="text-gray-400 hover:text-yellow-400 transition">About</a></li><li><a href="#services" class="text-gray-400 hover:text-yellow-400 transition">Services</a></li><li><a href="#fleet" class="text-gray-400 hover:text-yellow-400 transition">Our Fleet</a></li></ul></div>
+            <div><h4 class="text-lg font-semibold text-yellow-500 mb-4">Our Top Services</h4><ul class="space-y-2"><li><a href="airporttransfers.html" class="text-gray-400 hover:text-yellow-400 transition">Airport Transfer</a></li><li><a href="chauffeurservice.html" class="text-gray-400 hover:text-yellow-400 transition">Chauffeur Service</a></li><li><a href="businesstraveltrip.html" class="text-gray-400 hover:text-yellow-400 transition">Business Travel</a></li><li><a href="corpratetransport.html" class="text-gray-400 hover:text-yellow-400 transition">Corporate Transport</a></li></ul></div>
+            <div><h4 class="text-lg font-semibold text-yellow-500 mb-4">Contact Us</h4><ul class="space-y-3 text-gray-400"><li class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-3 text-yellow-500"></i><span>Suhail Al Mazroui Bldg, Sheikh Zayed Bin Sultan St, Abu Dhabi</span></li><li class="flex items-start"><i class="fas fa-phone-alt mt-1 mr-3 text-yellow-500"></i><span>+971 56 300 6129</span></li><li class="flex items-start"><i class="fas fa-envelope mt-1 mr-3 text-yellow-500"></i><span>starwaylimousine@gmail.com</span></li></ul></div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center">
+            <p class="text-gray-500 text-sm">© 2025 Starway Limousine. All rights reserved.</p>
+            <div class="flex space-x-4 mt-4 sm:mt-0"><a href="#" class="text-gray-500 hover:text-yellow-400 transition"><i class="fab fa-facebook-f"></i></a><a href="#" class="text-gray-500 hover:text-yellow-400 transition"><i class="fab fa-instagram"></i></a><a href="#" class="text-gray-500 hover:text-yellow-400 transition"><i class="fab fa-whatsapp"></i></a></div>
+        </div>
+    </div>
+  </footer>
+
+
+<!-- Floating Buttons Section -->
+
+  <div id="fab-container" class="fab-container fixed bottom-6 right-6 z-50">
+
+  <a href="https://wa.me/971563006129?text=Hi" target="_blank" aria-label="Chat on WhatsApp"
+     class="fab-option whatsapp flex items-center justify-center h-14 w-14 bg-green-500 rounded-full text-white text-2xl shadow-lg">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <a href="tel:+971563006129" aria-label="Call Us"
+     class="fab-option call flex items-center justify-center h-14 w-14 bg-blue-600 rounded-full text-white text-2xl shadow-lg">
+    <i class="fas fa-phone-alt"></i>
+  </a>
+
+  <button id="fab-trigger" aria-label="Open contact options"
+          class="flex items-center justify-center h-16 w-16 bg-yellow-500 rounded-full text-black text-3xl shadow-xl hover:bg-yellow-400 focus:outline-none">
+    <i class="main-fab-icon fas fa-plus"></i>
+  </button>
+  
+</div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // --- START: New animation for the hero section ---
+      gsap.from(".hero-content-box", {
+        scrollTrigger: {
+          trigger: ".hero-content-box",
+          start: "top 95%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+      });
+
+      gsap.to(".hero-image-zoom", {
+          scrollTrigger: {
+              trigger: "body",
+              start: "top top",
+              end: "bottom top",
+              scrub: 1,
+          },
+          scale: 1.15,
+          ease: "none",
+      });
+      // --- END: New animation for the hero section ---
+
+
+      // This is your existing animation for other sections
+      const animatedElements = document.querySelectorAll(".animate-on-scroll");
+      animatedElements.forEach((el) => {
+        gsap.fromTo(
+          el,
+          { autoAlpha: 0, x: 80 },
+          {
+            duration: 0.5,
+            autoAlpha: 1,
+            x: 0,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+          }
+        );
+      });
+    });
+    const fabContainer = document.getElementById('fab-container');
+const fabTrigger = document.getElementById('fab-trigger');
+
+fabTrigger.addEventListener('click', () => {
+  fabContainer.classList.toggle('is-open');
+});
+  </script>
+</body>
+</html>

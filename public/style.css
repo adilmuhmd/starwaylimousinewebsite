@@ -1,0 +1,49 @@
+:root {
+    --background-color: #f4f7f9;
+    --primary-text-color: #2c3e50;
+    --secondary-text-color: #7f8c8d;
+    --card-background-color: #ffffff;
+    --card-shadow-color: rgba(0, 0, 0, 0.08);
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--primary-text-color);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.container {
+    background-color: var(--card-background-color);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px var(--card-shadow-color);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+#lottie-animation {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto 20px;
+}
+h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0 0 15px;
+}
+.message {
+    color: var(--secondary-text-color);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 25px;
+}
+.team-signature {
+    color: var(--secondary-text-color);
+    font-style: italic;
+    font-size: 0.9rem;
+}
