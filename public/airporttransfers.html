@@ -140,23 +140,108 @@
   transform: rotate(45deg);
 }
 
+#services-menu.is-open {
+      opacity: 1;
+      transform: scale(1) translateX(-50%);
+      pointer-events: auto;
+      visibility: visible;
+    }
+    #services-chevron.is-open {
+      transform: rotate(180deg);
+    }
+    body.mobile-menu-open {
+  overflow: hidden; /* Prevents scrolling the page behind the menu */
+}
+.mobile-menu-panel {
+  transition: transform 0.3s ease-in-out;
+}
+body.mobile-menu-open .mobile-menu-panel {
+  transform: translateX(0);
+}
+.mobile-submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+}
+.mobile-submenu.is-open {
+  max-height: 500px; /* A value larger than the content's height */
+}
+#mobile-services-chevron.is-open {
+  transform: rotate(180deg);
+}
+
   </style>
-</head>
-<body class="bg-gray-50 text-black">
-  <header class="py-6 px-8 sm:px-12 md:px-16">
+<header class="py-4 px-6 sm:px-12">
     <div class="container mx-auto flex justify-between items-center">
       <a href="index.html">
-        <img src="assets/starwaylogowhite.png" alt="Starway Limousine Logo" class="h-20" />
+        <img src="assets/starwaylogowhite.png" alt="Starway Logo" class="h-20" />
       </a>
-      <div class="flex-1"></div>
-      <nav class="hidden md:flex space-x-6">
+      
+      <nav class="hidden md:flex items-center space-x-8">
         <a href="index.html" class="text-white text-lg nav-link">Home</a>
-        <a href="private-tours.html" class="text-white text-lg nav-link">Private Tours</a>
-        <a href="airport-transfer.html" class="text-white text-lg nav-link">Airport Transfer</a>
-        <a href="event-transfers.html" class="text-white text-lg nav-link">Event Transfers</a>
+        
+        <div class="relative">
+          <div class="py-4">
+              <button id="services-button" class="text-white text-lg nav-link flex items-center focus:outline-none">
+                Services
+                <svg id="services-chevron" class="w-4 h-4 ml-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+          </div>
+          <div id="services-menu" class="absolute top-full left-1/2 w-64 bg-black bg-opacity-80 backdrop-blur-sm rounded-lg shadow-lg p-2 opacity-0 scale-95 pointer-events-none invisible transition-all duration-300 ease-in-out transform -translate-x-1/2">
+            <a href="airporttransfers.html" class="block px-4 py-2 text-white hover:bg-yellow-500 hover:text-black rounded-md">Airport Transfer</a>
+            <a href="chauffeurservice.html" class="block px-4 py-2 text-white hover:bg-yellow-500 hover:text-black rounded-md">Chauffeur Service</a>
+            <a href="corpratetransport.html" class="block px-4 py-2 text-white hover:bg-yellow-500 hover:text-black rounded-md">Corporate Transport</a>
+            <a href="roundtripalloveruae.html" class="block px-4 py-2 text-white hover:bg-yellow-500 hover:text-black rounded-md">UAE Round Trips</a>
+            <a href="sportingevents.html" class="block px-4 py-2 text-white hover:bg-yellow-500 hover:text-black rounded-md">Sporting Events</a>
+            <a href="holidayparty.html" class="block px-4 py-2 text-white hover:bg-yellow-500 hover:text-black rounded-md">Holiday Parties</a>
+            <a href="vipescorts.html" class="block px-4 py-2 text-white hover:bg-yellow-500 hover:text-black rounded-md">VIP Escort</a>
+          </div>
+        </div>
+
+        <a href="ourfleet.html" class="text-white text-lg nav-link">Our Fleet</a>
+        <a href="about.html" class="text-white text-lg nav-link">About</a>
+        <a href="contactus.html" class="text-white text-lg nav-link">Contact</a>
       </nav>
+
+      <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-white focus:outline-none">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+      </div>
+
     </div>
-  </header>
+</header>
+
+<div id="mobile-menu-wrapper" class="fixed inset-0 z-50 hidden">
+    <div id="mobile-menu-overlay" class="absolute inset-0 bg-black bg-opacity-60"></div>
+    <div class="mobile-menu-panel fixed top-0 right-0 h-full w-4/5 max-w-sm bg-black text-white p-6 transform translate-x-full">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-casanova text-yellow-500">Menu</h2>
+            <button id="mobile-menu-close" class="text-3xl text-white focus:outline-none">&times;</button>
+        </div>
+        <nav class="flex flex-col space-y-4 text-lg">
+            <a href="index.html" class="py-2 border-b border-gray-700">Home</a>
+            <div>
+              <button id="mobile-services-button" class="w-full py-2 flex justify-between items-center border-b border-gray-700">
+                <span>Services</span>
+                <svg id="mobile-services-chevron" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+              <div id="mobile-submenu" class="mobile-submenu pl-4 mt-2 flex flex-col space-y-2">
+                <a href="airporttransfers.html" class="text-gray-300 hover:text-yellow-500">Airport Transfer</a>
+                <a href="chauffeurservice.html" class="text-gray-300 hover:text-yellow-500">Chauffeur Service</a>
+                <a href="corpratetransport.html" class="text-gray-300 hover:text-yellow-500">Corporate Transport</a>
+                <a href="roundtripalloveruae.html" class="text-gray-300 hover:text-yellow-500">UAE Round Trips</a>
+                <a href="sportingevents.html" class="text-gray-300 hover:text-yellow-500">Sporting Events</a>
+                <a href="holidayparty.html" class="text-gray-300 hover:text-yellow-500">Holiday Parties</a>
+                <a href="vipescorts.html" class="text-gray-300 hover:text-yellow-500">VIP Escort</a>
+              </div>
+            </div>
+            <a href="ourfleet.html" class="py-2 border-b border-gray-700">Our Fleet</a>
+            <a href="about.html" class="py-2 border-b border-gray-700">About</a>
+            <a href="contactus.html" class="py-2 border-b border-gray-700">Contact</a>
+        </nav>
+    </div>
+</div>
 
 
   <main class="pb-16">
@@ -470,67 +555,125 @@
 </div>
 
 
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      gsap.registerPlugin(ScrollTrigger);
-
-      // --- START: New animation for the hero section ---
-      gsap.from(".hero-content-box", {
-        scrollTrigger: {
-          trigger: ".hero-content-box",
-          start: "top 95%",
-          toggleActions: "play none none none",
-          once: true,
-        },
-        y: 100,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-      });
-
-      gsap.to(".hero-image-zoom", {
-          scrollTrigger: {
-              trigger: "body",
-              start: "top top",
-              end: "bottom top",
-              scrub: 1,
-          },
-          scale: 1.15,
-          ease: "none",
-      });
-      // --- END: New animation for the hero section ---
-
-
-      // This is your existing animation for other sections
-      const animatedElements = document.querySelectorAll(".animate-on-scroll");
-      animatedElements.forEach((el) => {
-        gsap.fromTo(
-          el,
-          { autoAlpha: 0, x: 80 },
-          {
-            duration: 0.5,
-            autoAlpha: 1,
-            x: 0,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none none",
-              once: true,
-            },
-          }
-        );
-      });
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // --- GSAP Scroll Animations ---
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Animation for the hero content box
+    gsap.from(".hero-content-box", {
+      scrollTrigger: {
+        trigger: ".hero-content-box",
+        start: "top 95%",
+        toggleActions: "play none none none",
+        once: true,
+      },
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
     });
-    const fabContainer = document.getElementById('fab-container');
-const fabTrigger = document.getElementById('fab-trigger');
 
-fabTrigger.addEventListener('click', () => {
-  fabContainer.classList.toggle('is-open');
-});
-  </script>
+    // Zoom animation for the hero image (if you use it)
+    gsap.to(".hero-image-zoom", {
+        scrollTrigger: {
+            trigger: "body",
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+        },
+        scale: 1.15,
+        ease: "none",
+    });
+
+    // Main animation for other sections
+    const animatedElements = document.querySelectorAll(".animate-on-scroll");
+    animatedElements.forEach((el) => {
+      gsap.fromTo(
+        el,
+        { autoAlpha: 0, x: -50, rotationY: 15 }, 
+        {
+          duration: 0.8, 
+          autoAlpha: 1, 
+          x: 0, 
+          rotationY: 0,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            toggleActions: "play none none none",
+            once: true,
+          },
+        }
+      );
+    });
+
+    // --- Floating Action Button Script ---
+    const fabContainer = document.getElementById('fab-container');
+    const fabTrigger = document.getElementById('fab-trigger');
+    if (fabTrigger) {
+      fabTrigger.addEventListener('click', () => {
+        fabContainer.classList.toggle('is-open');
+      });
+    }
+
+    // --- Clickable Dropdown Script (Desktop) ---
+    const servicesButton = document.getElementById('services-button');
+    const servicesMenu = document.getElementById('services-menu');
+    const servicesChevron = document.getElementById('services-chevron');
+    if (servicesButton) {
+      servicesButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        servicesMenu.classList.toggle('is-open');
+        servicesChevron.classList.toggle('is-open');
+      });
+    }
+    
+    // Close desktop dropdown if clicked outside
+    window.addEventListener('click', () => {
+      if (servicesMenu && servicesMenu.classList.contains('is-open')) {
+        servicesMenu.classList.remove('is-open');
+        servicesChevron.classList.remove('is-open');
+      }
+    });
+
+    // --- Mobile Drawer Script (This was missing) ---
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenuWrapper = document.getElementById('mobile-menu-wrapper');
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileServicesButton = document.getElementById('mobile-services-button');
+    const mobileSubmenu = document.getElementById('mobile-submenu');
+    const mobileServicesChevron = document.getElementById('mobile-services-chevron');
+    const body = document.body;
+
+    if (mobileMenuButton) {
+      const openMenu = () => {
+        if (mobileMenuWrapper) mobileMenuWrapper.classList.remove('hidden');
+        body.classList.add('mobile-menu-open');
+      };
+
+      const closeMenu = () => {
+        body.classList.remove('mobile-menu-open');
+        setTimeout(() => {
+          if (mobileMenuWrapper) mobileMenuWrapper.classList.add('hidden');
+        }, 300);
+      };
+
+      mobileMenuButton.addEventListener('click', openMenu);
+      mobileMenuClose.addEventListener('click', closeMenu);
+      mobileMenuOverlay.addEventListener('click', closeMenu);
+
+      if (mobileServicesButton) {
+          mobileServicesButton.addEventListener('click', () => {
+          mobileSubmenu.classList.toggle('is-open');
+          mobileServicesChevron.classList.toggle('is-open');
+        });
+      }
+    }
+  });
+</script>
 </body>
 </html>

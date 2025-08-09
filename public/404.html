@@ -3,23 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Maintenance</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>404 Page Not Found | Starway Limousine</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <style>
+        :root {
+            --background-color: #1a1a1a; /* Deep charcoal for a luxury feel */
+            --text-color: #f0f0f0;       /* Off-white for readability */
+            --gold-color: #C09553;      /* A sophisticated, non-garish gold */
+            --button-text-color: #1a1a1a;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .lottie-container {
+            width: 100%;
+            max-width: 300px; /* Adjust size of animation */
+            margin: 0 auto 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--gold-color);
+            margin: 0 0 15px 0;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            font-weight: 400;
+            line-height: 1.6;
+            margin: 0 0 30px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--gold-color);
+            color: var(--button-text-color);
+            padding: 15px 35px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            background-color: #d4a76a; /* A slightly lighter gold on hover */
+        }
+        
+        .secondary-links {
+            margin-top: 40px;
+        }
+        
+        .secondary-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+        
+        .secondary-links a:hover {
+            color: var(--gold-color);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div id="lottie-animation"></div>
 
-        <h1>We're Upgrading Our Systems</h1>
-        <p class="message">
-            Our site is temporarily unavailable as we're making things even better for you.
-            We'll be back online shortly. Thanks for your patience!
+    <div class="container">
+        
+        <div class="lottie-container">
+            <lottie-player 
+                src="https://lottie.host/2b9b5c2a-8c76-4a4e-a035-71c11e4b9b00/k5Yt1u6bQ3.json" 
+                background="transparent" 
+                speed="1" 
+                style="width: 100%; height: 100%;" 
+                loop 
+                autoplay>
+            </lottie-player>
+        </div>
+        
+        <h1>Page Not Found</h1>
+        
+        <p>
+            It seems the page you are looking for has taken a detour. Please use the button below to return to our main lounge.
         </p>
-        <p class="team-signature">&mdash; Starway Limousine</p>
+        
+        <a href="https://starwaylimousine.com/" class="cta-button">RETURN TO HOMEPAGE</a>
+
+        <div class="secondary-links">
+            <a href="https://starwaylimousine.com/ourfleet.html">Our Fleet</a>
+            <span>&bull;</span>
+            <a href="https://starwaylimousine.com/contactus.html">Contact Us</a>
+        </div>
+
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>

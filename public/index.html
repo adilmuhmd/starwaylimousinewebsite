@@ -59,8 +59,9 @@
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
     /* Add this to your existing <style> tag in the <head> */
-.fab-container .fab-option {
-  position: absolute;
+
+      .fab-container .fab-option {
+        position: absolute;
   bottom: 0;
   right: 0;
   opacity: 0;
@@ -93,6 +94,28 @@
 .fab-container.is-open .main-fab-icon {
   transform: rotate(45deg);
 }
+
+/* Add these styles for the mobile drawer */
+body.mobile-menu-open {
+  overflow: hidden; /* Prevents scrolling the page behind the menu */
+}
+.mobile-menu-panel {
+  transition: transform 0.3s ease-in-out;
+}
+body.mobile-menu-open .mobile-menu-panel {
+  transform: translateX(0);
+}
+.mobile-submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+}
+.mobile-submenu.is-open {
+  max-height: 500px; /* A value larger than the content's height */
+}
+#mobile-services-chevron.is-open {
+  transform: rotate(180deg);
+}
   </style>
 </head>
 <body class="bg-white font-sans">
@@ -101,17 +124,57 @@
   <!-- Nav Section -->
   <header class="py-4 px-6 sm:px-12">
     <div class="container mx-auto flex justify-between items-center">
-      <img src="assets/starwaylogowhite.png" alt="Starway Logo" class="h-20" />
-      <div class="flex-1"></div>
-      <nav class="hidden md:flex space-x-6">
-        <a href="#" class="text-white text-lg nav-link">Home</a>
-        <a href="#about" class="text-white text-lg nav-link">About</a>
+      <a href="index.html">
+        <img src="assets/starwaylogowhite.png" alt="Starway Logo" class="h-20" />
+      </a>
+      
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="index.html" class="text-white text-lg nav-link">Home</a>
         <a href="#services" class="text-white text-lg nav-link">Services</a>
         <a href="#fleet" class="text-white text-lg nav-link">Our Fleet</a>
+        <a href="#about" class="text-white text-lg nav-link">About</a>
         <a href="#contact" class="text-white text-lg nav-link">Contact</a>
       </nav>
+
+      <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-white focus:outline-none">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+      </div>
+
     </div>
-  </header>
+</header>
+
+<div id="mobile-menu-wrapper" class="fixed inset-0 z-50 hidden">
+    <div id="mobile-menu-overlay" class="absolute inset-0 bg-black bg-opacity-60"></div>
+    <div class="mobile-menu-panel fixed top-0 right-0 h-full w-4/5 max-w-sm bg-black text-white p-6 transform translate-x-full">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-casanova text-yellow-500">Menu</h2>
+            <button id="mobile-menu-close" class="focus:outline-none">&times;</button>
+        </div>
+        <nav class="flex flex-col space-y-4">
+            <a href="index.html" class="text-lg py-2">Home</a>
+            <div>
+              <button id="mobile-services-button" class="w-full text-left text-lg py-2 flex justify-between items-center">
+                <span>Services</span>
+                <svg id="mobile-services-chevron" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+              <div id="mobile-submenu" class="mobile-submenu pl-4 mt-2 flex flex-col space-y-2">
+                <a href="airporttransfers.html" class="text-gray-300 hover:text-yellow-500">Airport Transfer</a>
+                <a href="chauffeurservice.html" class="text-gray-300 hover:text-yellow-500">Chauffeur Service</a>
+                <a href="corpratetransport.html" class="text-gray-300 hover:text-yellow-500">Corporate Transport</a>
+                <a href="roundtripalloveruae.html" class="text-gray-300 hover:text-yellow-500">UAE Round Trips</a>
+                <a href="sportingevents.html" class="text-gray-300 hover:text-yellow-500">Sporting Events</a>
+                <a href="holidayparty.html" class="text-gray-300 hover:text-yellow-500">Holiday Parties</a>
+                <a href="vipescorts.html" class="text-gray-300 hover:text-yellow-500">VIP Escort</a>
+              </div>
+            </div>
+            <a href="#fleet" class="text-lg py-2">Our Fleet</a>
+            <a href="#about" class="text-lg py-2">About</a>
+            <a href="#contact" class="text-lg py-2">Contact</a>
+        </nav>
+    </div>
+</div>
 
   <main>
       <!-- Hero Section -->
@@ -346,10 +409,12 @@
 
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+
+      // --- GSAP Scroll Animations ---
       gsap.registerPlugin(ScrollTrigger);
       const animatedElements = document.querySelectorAll(".animate-on-scroll");
       animatedElements.forEach((el) => {
@@ -369,14 +434,72 @@
           }
         );
       });
+
+      // --- Floating Action Button Script ---
+      const fabContainer = document.getElementById('fab-container');
+      const fabTrigger = document.getElementById('fab-trigger');
+      if (fabTrigger) {
+        fabTrigger.addEventListener('click', () => {
+          fabContainer.classList.toggle('is-open');
+        });
+      }
+
+      // --- Clickable Dropdown Script (Desktop) ---
+      const servicesButton = document.getElementById('services-button');
+      const servicesMenu = document.getElementById('services-menu');
+      const servicesChevron = document.getElementById('services-chevron');
+      if (servicesButton) {
+        servicesButton.addEventListener('click', (event) => {
+          event.stopPropagation();
+          servicesMenu.classList.toggle('is-open');
+          servicesChevron.classList.toggle('is-open');
+        });
+      }
+      
+      // Close desktop dropdown if clicked outside
+      window.addEventListener('click', () => {
+        if (servicesMenu && servicesMenu.classList.contains('is-open')) {
+          servicesMenu.classList.remove('is-open');
+          servicesChevron.classList.remove('is-open');
+        }
+      });
+
+      // --- Mobile Drawer Script ---
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenuWrapper = document.getElementById('mobile-menu-wrapper');
+      const mobileMenuClose = document.getElementById('mobile-menu-close');
+      const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+      const mobileServicesButton = document.getElementById('mobile-services-button');
+      const mobileSubmenu = document.getElementById('mobile-submenu');
+      const mobileServicesChevron = document.getElementById('mobile-services-chevron');
+      const body = document.body;
+
+      if (mobileMenuButton) {
+        const openMenu = () => {
+          if (mobileMenuWrapper) mobileMenuWrapper.classList.remove('hidden');
+          body.classList.add('mobile-menu-open');
+        };
+
+        const closeMenu = () => {
+          body.classList.remove('mobile-menu-open');
+          setTimeout(() => {
+            if (mobileMenuWrapper) mobileMenuWrapper.classList.add('hidden');
+          }, 300);
+        };
+
+        mobileMenuButton.addEventListener('click', openMenu);
+        mobileMenuClose.addEventListener('click', closeMenu);
+        mobileMenuOverlay.addEventListener('click', closeMenu);
+
+        if (mobileServicesButton) {
+            mobileServicesButton.addEventListener('click', () => {
+            mobileSubmenu.classList.toggle('is-open');
+            mobileServicesChevron.classList.toggle('is-open');
+          });
+        }
+      }
+
     });
-
-    const fabContainer = document.getElementById('fab-container');
-const fabTrigger = document.getElementById('fab-trigger');
-
-fabTrigger.addEventListener('click', () => {
-  fabContainer.classList.toggle('is-open');
-});
   </script>
 </body>
 </html>
